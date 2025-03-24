@@ -47,6 +47,7 @@ Sure! I grew up in Vancouver, Canada, in a tech-savvy family. My parents were so
 
 Lisa Carter acts: [DONE]
 
+###Conversation 2: Bhairavi - Data Science Graduate Student
 
 from tinytroupe.agent import TinyPerson
 bhairavi = TinyPerson("Bhairavi")
@@ -68,7 +69,7 @@ Bhairavi acts: [TALK]
               > can be used to solve real-world problems.
 Bhairavi acts: [DONE] 
 
-
+###Conversation 3: Mike - Machine Learning Professor
 >>> mike = TinyPerson("Mike")
 
 >>> mike.define("age", 35)  
