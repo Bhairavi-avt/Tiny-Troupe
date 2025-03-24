@@ -227,6 +227,8 @@ To split your data into features and target variables, you first need to identif
 X = data[['Age', 'Salary']]  # Features
 Y = data['Purchased']        # Target variable
 This way, X contains the features and Y contains the target variable. Would you like to know more about how to handle categorical variables or any other specific aspect?
+Mike acts: [DONE]
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Comment on wether the turing test is passes or not: 
 In this case, Mike, as a TinyPerson AI, is engaging in a conversation with Bhairavi (another TinyPerson), giving explanations and responding with helpful advice.
