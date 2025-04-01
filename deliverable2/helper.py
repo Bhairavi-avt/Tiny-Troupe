@@ -1,40 +1,47 @@
-from huggingface_hub import InferenceClient
-from streaming_stt_nemo import Model
-import random
-import torch
-import os 
+import streamlit as st
+import os
+import pandas as pd
 
-# Random seed generator
-def randomize_seed_fn(seed: int) -> int:
-    seed = random.randint(0, 999999)
-    return seed
+os.system("pip install together")
 
-# Function to generate AI response using the selected model
-def call_llama(prompt, seed=42):
-    seed = int(randomize_seed_fn(seed))
-    generator = torch.Generator().manual_seed(seed)
+from together import Together
 
-    HF_API_TOKEN = os.getenv("my-token")  # Use environment variable
+import os
 
-    if not HF_API_TOKEN:  # Fallback if not set
-        HF_API_TOKEN = "your-token"  # ⚠️ Replace this with your actual API token
+# Set the environment variable (just for testing purposes)
+os.environ["api"] = "Together_API_KEY"
 
-    client = InferenceClient("mistralai/Mistral-7B-Instruct-v0.2", token=HF_API_TOKEN)
-    
-    prompt = [
-    {"role": "user", "content": f"{prompt}"}
-]
+# Now, the code can access the api key from the environment variable
+client = Together(api_key=os.environ["api"])
 
-    output = ""
-    try:
-        for token in client.chat_completion(prompt, max_tokens=200, stream=True):
-            if token.choices and len(token.choices) > 0:
-                delta_content = token.choices[0].delta.content
-                if delta_content:
-                    output += delta_content
-    except Exception as e:
-        raise RuntimeError(f"Error during text generation: {e}")
-        
-    return output
 
-print(call_llama("who is godzilla?"))
+
+
+
+def call_llama(prompt: str) -> str:
+    """
+        Send a prompt to the Llama model and return the response.
+        Args:
+            prompt (str): The input prompt to send to the Llama model.
+        Returns:
+            str: The response from the Llama model.
+    """
+
+    # Create a completion request with the prompt
+    response = client.chat.completions.create(
+
+        # Use the Llama-3-8b-chat-hf model
+        model="meta-llama/Llama-3-8b-chat-hf",
+
+        # Define the prompt as a user message
+        messages=[
+            {
+                "role": "user",
+                "content": prompt  # Use the input prompt
+            }
+        ],
+        temperature=0.7,
+    )
+
+    # Return the content of the first response message
+    return response.choices[0].message.content
