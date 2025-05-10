@@ -1,5 +1,0 @@
-streamlit
-together
-streaming-stt-nemo==0.2.0
-torch
-transformers
